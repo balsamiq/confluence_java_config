@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="Balsamiq Wireframes for Confluence" plugins-version="2">
+	<plugin-info>
+		<description>Balsamiq Wireframes allows you to add UI wireframes to your Confluence pages.</description>
+		<version>999.999</version>
+		<!-- the versions of the application this plugin is for -->
+		<!--<application-version min="6.0" max="100"/>-->
+		<!-- details of the plugin vendor -->
+		<vendor name="Balsamiq" url="https://balsamiq.com" />
+		<param name="atlassian-licensing-enabled">true</param>
+		<param name="plugin-icon">images/icon_128x128.png</param>
+		<param name="plugin-logo">images/icon_144x144.png</param>
+		<param name="plugin-banner">images/upm_banner_1120x548.png</param>
+		<param name="vendor-icon">images/icon_128x128.png</param>
+		<param name="vendor-logo">images/icon_144x144.png</param>
+		<param name="configure.url">/admin/plugins/mockups/configure.action</param>
+		<param name="post.install.url">/admin/plugins/mockups/configure.action?postInstall=true</param>
+		<param name="post.update.url">/admin/plugins/mockups/configure.action?postUpdate=true</param>
+		<param name="atlassian-data-center-status">compatible</param>
+		<param name="atlassian-data-center-compatible">true</param>
+		<param name="read-only-access-mode-compatible">true</param>
+	</plugin-info>
+
+	<ao key="balsamiqMockupsBasDb">
+		<description>The module configuring the Active Objects service used by this plugin</description>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BasTempObject</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BasSession</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BasPlatformInfo</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarInfo</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarResource</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarBranch</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarThumbnail</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarUser</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.BarComment</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.UserEvent</entity>
+		<entity>com.balsamiq.confluence.plugins.mockups.ao.AppSettings</entity>
+		<entity>com.balsamiq.javartc.RtcSubscription</entity>
+	</ao>
+
+	<routing key="bas-urls-key" path="/bas">
+		<route from="/{action}" to="/plugins/servlet/com.balsamiq.mockups.bas?action={action}"/>
+	</routing>
+
+	<routing key="bas-diagnosis-key" path="/bas-test">
+		<route from="/{spaceKey}" to="/plugins/servlet/com.balsamiq.mockups.diagnosis.wrapper?spaceKey={spaceKey}"/>
+	</routing>
+
+	<macro name="wireframe" class="com.balsamiq.confluence.plugins.mockups.MockupsMacro" key="wireframe">
+		<description>Required. The {wireframe} macro displays the UI wireframe in the page.</description>
+	</macro>
+
+	<!--needed for migration purpose-->
+	<macro name="mockup" class="com.balsamiq.confluence.plugins.mockups.MockupsMacro" key="mockup">
+		<description>Required. The {mockup} macro displays the UI mockup in the page.</description>
+	</macro>
+
+	<macro-migrator key="mockup-migrator" macro-name="mockup" class="com.balsamiq.confluence.plugins.mockups.MockupsMacroMigrator">
+		<description>Required to migrate wiki markup macros to Confluence 4+.</description>
+	</macro-migrator>
+
+	<!--TODO: documentation link -->
+	<xhtml-macro key="wireframe2" name="wireframe" class="com.balsamiq.confluence.plugins.mockups.MockupsMacro2"
+		documentation-url="https://docs.balsamiq.com/confluence/server/wireframes/intro/"
+		icon="/download/resources/com.balsamiq.confluence.plugins.mockups/icon_24x24_with_border.png">
+		<description>Required. Displays a Balsamiq Wireframes project</description>
+		<category name="external-content" />
+		<parameters>
+			<parameter name="Name" type="string" />
+			<parameter name="Version" type="string" />
+			<parameter name="Alignment" type="enum">
+				<value name="Left"/>
+				<value name="Center"/>
+				<value name="Right"/>
+          	</parameter>
+          	<parameter name="Width" type="string" />
+		</parameters>
+		<property-panel>
+			<spacer />
+			<button id="balsamiq-mockups-macro-prop-config" label="Config" />
+			<!--<spacer />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-small" label="Small" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-medium" label="Medium" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-original" label="Original" />-->
+			<!--<spacer />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-left" label="Left" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-center" label="Center" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-right" label="Right" />-->
+			<spacer />
+		</property-panel>
+	</xhtml-macro>
+
+	<!--TODO: documentation link -->
+	<xhtml-macro key="mockup2" name="mockup" class="com.balsamiq.confluence.plugins.mockups.MockupsMacro2"
+		documentation-url="https://docs.balsamiq.com/confluence/server/wireframes/intro/"
+		icon="/download/resources/com.balsamiq.confluence.plugins.mockups/icon_24x24_with_border.png">
+		<description>Required. Displays a Balsamiq Wireframes project</description>
+		<category name="external-content" />
+		<parameters>
+			<parameter name="Name" type="string" />
+			<parameter name="Version" type="string" />
+			<parameter name="Alignment" type="enum">
+				<value name="Left"/>
+				<value name="Center"/>
+				<value name="Right"/>
+          	</parameter>
+          	<parameter name="Width" type="string" />
+		</parameters>
+		<property-panel>
+			<spacer />
+			<button id="balsamiq-mockups-macro-prop-config" label="Config" />
+			<!--<spacer />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-small" label="Small" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-medium" label="Medium" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-size-original" label="Original" />-->
+			<!--<spacer />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-left" label="Left" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-center" label="Center" />-->
+			<!--<button id="balsamiq-mockups-macro-prop-align-right" label="Right" />-->
+			<spacer />
+		</property-panel>
+	</xhtml-macro>
+
+	<!-- Add > UI Mockup menu (we only use it in 3.5, from 4.0 we use the insert instead) -->
+	<!--<web-item key="com_balsamiq_confluence_plugins_mockups_menu_addmockup" name="Add UI Mockup Link" section="system.content.add/space" weight="100">-->
+		<!--<label key="UI Mockup" />-->
+		<!--<link>/plugins/servlet/mockups?do=add&amp;page=$helper.page.id</link>-->
+		<!--<description>Required for Confluence 3.x - not used in 4.x+</description>-->
+		<!--<icon height="16" width="16"><link>/download/resources/com.balsamiq.confluence.plugins.mockups/addmockupicon.gif</link></icon>-->
+		<!--<condition class="com.balsamiq.confluence.plugins.mockups.MockupsCondition" />-->
+	<!--</web-item>-->
+
+	<!-- Insert > UI Mockup menu in the editor (not available in 3.5)-->
+	<web-item key="editor-macrolinkkey" name="Insert UI Wireframe" section="system.editor.featured.macros.default" weight="11">
+		<description>Required for Confluence 4.x+</description>
+		<label key="Balsamiq Wireframes" />
+		<link linkId="wireframe" />
+		<condition class="com.balsamiq.confluence.plugins.mockups.MockupsInsertMenuCondition" />
+	</web-item>
+
+	<web-resource key="editor-web-resource" name="Editor Web Resources">
+		<resource type="download" name="editor.css" location="includes/editor/css/editor.css" />
+        <resource type="download" name="balsamiqmockups.js" location="includes/editor/balsamiqmockups.js" />
+        <dependency>confluence.web.resources:ajs</dependency>
+        <dependency>confluence.web.resources:page-editor</dependency>
+        <context>editor</context>
+		<param name="batch">false</param>
+	</web-resource>
+
+    <web-resource key="blueprint-web-resource" name="Blueprint Web Resources">
+        <resource type="download" name="blueprintcallback.js" location="includes/editor/blueprintcallback.js" />
+        <dependency>confluence.web.resources:ajs</dependency>
+        <dependency>com.atlassian.confluence.plugins.confluence-create-content-plugin:resources</dependency>
+        <context>atl.general</context>
+        <context>atl.admin</context>
+    </web-resource>
+
+	<web-resource key="balsamiqWireframesEditor" >
+		<param name="batch" value="false"/>
+		<resource type="download" name="b4/version.jsonp" location="editor-b4/version.jsonp"/>
+		<resource type="download" name="b4/balsamiqmockupslogo.999.0.999.js" location="editor-b4/balsamiqmockupslogo.999.0.999.js"/>
+		<resource type="download" name="b4/balsamiqsplashscreen.999.0.999.js" location="editor-b4/balsamiqsplashscreen.999.0.999.js"/>
+		<resource type="download" name="b4/loading-screen.999.0.999.js" location="editor-b4/loading-screen.999.0.999.js"/>
+		<resource type="download" name="b4/editor-web.999.0.999.js" location="editor-b4/editor-web.999.0.999.js"/>
+		<resource type="download" name="all.css" location="css/all.css"/>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+
+		<!-- AUI DEPENDENCIES: BEGIN -->
+		<resource type="download" name="aui-prototyping-8.7.1.min.css" location="css/aui-prototyping-8.7.1.min.css"/>
+		<resource type="download" name="fonts/atlassian-icons.woff" location="fonts/atlassian-icons.woff"/>
+		<resource type="download" name="fonts/atlassian-icons.ttf" location="fonts/atlassian-icons.ttf"/>
+		<resource type="download" name="fonts/atlassian-icons.eot" location="fonts/atlassian-icons.eot"/>
+		<resource type="download" name="fonts/adgs-icons.woff" location="fonts/adgs-icons.woff"/>
+		<resource type="download" name="fonts/adgs-icons.ttf" location="fonts/adgs-icons.ttf"/>
+		<resource type="download" name="fonts/adgs-icons.eot" location="fonts/adgs-icons.eot"/>
+		<resource type="download" name="aui-prototyping-8.7.1.min.js" location="lib/aui-prototyping-8.7.1.min.js"/>
+		<resource type="download" name="jquery-3.4.1.min.js" location="lib/jquery-3.4.1.min.js"/>
+		<!-- AUI DEPENDENCIES: END -->
+
+		<!-- EDITOR DEPENDENCIES: BEGIN -->
+	<resource type="download" name="js/pdfkit-0.13.0-withGlobalFontkit.js" location="editor-b4/js/pdfkit-0.13.0-withGlobalFontkit.js"/>
+	<resource type="download" name="js/sql-0.4.0-memory-growth.js" location="editor-b4/js/sql-0.4.0-memory-growth-updated.js"/>
+	<resource type="download" name="fonts/balsamiqsans/balsamiqsans.css" location="editor-b4/fonts/balsamiqsans/balsamiqsans.css"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Regular.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Regular.woff2"/>
+	<resource type="download" name="BalsamiqSans-Regular.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Regular.woff2"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Bold.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Bold.woff2"/>
+	<resource type="download" name="BalsamiqSans-Bold.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Bold.woff2"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Italic.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Italic.woff2"/>
+	<resource type="download" name="BalsamiqSans-Italic.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Italic.woff2"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-BoldItalic.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-BoldItalic.woff2"/>
+	<resource type="download" name="BalsamiqSans-BoldItalic.woff2" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-BoldItalic.woff2"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Regular.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Regular.ttf"/>
+	<resource type="download" name="BalsamiqSans-Regular.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Regular.ttf"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Bold.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Bold.ttf"/>
+	<resource type="download" name="BalsamiqSans-Bold.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Bold.ttf"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-Italic.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Italic.ttf"/>
+	<resource type="download" name="BalsamiqSans-Italic.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-Italic.ttf"/>
+	<resource type="download" name="fonts/balsamiqsans/BalsamiqSans-BoldItalic.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-BoldItalic.ttf"/>
+	<resource type="download" name="BalsamiqSans-BoldItalic.ttf" location="editor-b4/fonts/balsamiqsans/BalsamiqSans-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/opensans/opensans.css" location="editor-b4/fonts/opensans/opensans.css"/>
+	<resource type="download" name="fonts/opensans/opensans-regular-webfont.woff" location="editor-b4/fonts/opensans/opensans-regular-webfont.woff"/>
+	<resource type="download" name="opensans-regular-webfont.woff" location="editor-b4/fonts/opensans/opensans-regular-webfont.woff"/>
+	<resource type="download" name="fonts/opensans/opensans-bold-webfont.woff" location="editor-b4/fonts/opensans/opensans-bold-webfont.woff"/>
+	<resource type="download" name="opensans-bold-webfont.woff" location="editor-b4/fonts/opensans/opensans-bold-webfont.woff"/>
+	<resource type="download" name="fonts/opensans/opensans-italic-webfont.woff" location="editor-b4/fonts/opensans/opensans-italic-webfont.woff"/>
+	<resource type="download" name="opensans-italic-webfont.woff" location="editor-b4/fonts/opensans/opensans-italic-webfont.woff"/>
+	<resource type="download" name="fonts/opensans/opensans-bolditalic-webfont.woff" location="editor-b4/fonts/opensans/opensans-bolditalic-webfont.woff"/>
+	<resource type="download" name="opensans-bolditalic-webfont.woff" location="editor-b4/fonts/opensans/opensans-bolditalic-webfont.woff"/>
+	<resource type="download" name="fonts/arial/Arial.ttf" location="editor-b4/fonts/arial/Arial.ttf"/>
+	<resource type="download" name="fonts/arial/ArialBold.ttf" location="editor-b4/fonts/arial/ArialBold.ttf"/>
+	<resource type="download" name="fonts/arial/ArialBoldItalic.ttf" location="editor-b4/fonts/arial/ArialBoldItalic.ttf"/>
+	<resource type="download" name="fonts/arial/ArialItalic.ttf" location="editor-b4/fonts/arial/ArialItalic.ttf"/>
+	<resource type="download" name="fonts/robotoslab/RobotoSlab-Bold.ttf" location="editor-b4/fonts/robotoslab/RobotoSlab-Bold.ttf"/>
+	<resource type="download" name="fonts/robotoslab/RobotoSlab-Regular.ttf" location="editor-b4/fonts/robotoslab/RobotoSlab-Regular.ttf"/>
+	<resource type="download" name="fonts/lato/Lato-Italic.ttf" location="editor-b4/fonts/lato/Lato-Italic.ttf"/>
+	<resource type="download" name="fonts/lato/Lato-Bold.ttf" location="editor-b4/fonts/lato/Lato-Bold.ttf"/>
+	<resource type="download" name="fonts/lato/Lato-Regular.ttf" location="editor-b4/fonts/lato/Lato-Regular.ttf"/>
+	<resource type="download" name="fonts/lato/Lato-BoldItalic.ttf" location="editor-b4/fonts/lato/Lato-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/caveat/Caveat-Bold.ttf" location="editor-b4/fonts/caveat/Caveat-Bold.ttf"/>
+	<resource type="download" name="fonts/caveat/Caveat-Regular.ttf" location="editor-b4/fonts/caveat/Caveat-Regular.ttf"/>
+	<resource type="download" name="fonts/inconsolata/Inconsolata-Bold.ttf" location="editor-b4/fonts/inconsolata/Inconsolata-Bold.ttf"/>
+	<resource type="download" name="fonts/inconsolata/Inconsolata-Regular.ttf" location="editor-b4/fonts/inconsolata/Inconsolata-Regular.ttf"/>
+	<resource type="download" name="fonts/ptsans/PT_Sans-Web-Italic.ttf" location="editor-b4/fonts/ptsans/PT_Sans-Web-Italic.ttf"/>
+	<resource type="download" name="fonts/ptsans/PT_Sans-Web-Regular.ttf" location="editor-b4/fonts/ptsans/PT_Sans-Web-Regular.ttf"/>
+	<resource type="download" name="fonts/ptsans/PT_Sans-Web-Bold.ttf" location="editor-b4/fonts/ptsans/PT_Sans-Web-Bold.ttf"/>
+	<resource type="download" name="fonts/ptsans/PT_Sans-Web-BoldItalic.ttf" location="editor-b4/fonts/ptsans/PT_Sans-Web-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/ptserif/PT_Serif-Web-Regular.ttf" location="editor-b4/fonts/ptserif/PT_Serif-Web-Regular.ttf"/>
+	<resource type="download" name="fonts/ptserif/PT_Serif-Web-BoldItalic.ttf" location="editor-b4/fonts/ptserif/PT_Serif-Web-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/ptserif/PT_Serif-Web-Italic.ttf" location="editor-b4/fonts/ptserif/PT_Serif-Web-Italic.ttf"/>
+	<resource type="download" name="fonts/ptserif/PT_Serif-Web-Bold.ttf" location="editor-b4/fonts/ptserif/PT_Serif-Web-Bold.ttf"/>
+	<resource type="download" name="fonts/robotomono/RobotoMono-Regular.ttf" location="editor-b4/fonts/robotomono/RobotoMono-Regular.ttf"/>
+	<resource type="download" name="fonts/robotomono/RobotoMono-BoldItalic.ttf" location="editor-b4/fonts/robotomono/RobotoMono-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/robotomono/RobotoMono-Bold.ttf" location="editor-b4/fonts/robotomono/RobotoMono-Bold.ttf"/>
+	<resource type="download" name="fonts/robotomono/RobotoMono-Italic.ttf" location="editor-b4/fonts/robotomono/RobotoMono-Italic.ttf"/>
+	<resource type="download" name="fonts/vollkorn/Vollkorn-Bold.ttf" location="editor-b4/fonts/vollkorn/Vollkorn-Bold.ttf"/>
+	<resource type="download" name="fonts/vollkorn/Vollkorn-Regular.ttf" location="editor-b4/fonts/vollkorn/Vollkorn-Regular.ttf"/>
+	<resource type="download" name="fonts/vollkorn/Vollkorn-Italic.ttf" location="editor-b4/fonts/vollkorn/Vollkorn-Italic.ttf"/>
+	<resource type="download" name="fonts/vollkorn/Vollkorn-BoldItalic.ttf" location="editor-b4/fonts/vollkorn/Vollkorn-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/roboto/Roboto-Regular.ttf" location="editor-b4/fonts/roboto/Roboto-Regular.ttf"/>
+	<resource type="download" name="fonts/roboto/Roboto-BoldItalic.ttf" location="editor-b4/fonts/roboto/Roboto-BoldItalic.ttf"/>
+	<resource type="download" name="fonts/roboto/Roboto-Italic.ttf" location="editor-b4/fonts/roboto/Roboto-Italic.ttf"/>
+	<resource type="download" name="fonts/roboto/Roboto-Bold.ttf" location="editor-b4/fonts/roboto/Roboto-Bold.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-Semibold.ttf" location="editor-b4/fonts/opensans/OpenSans-Semibold.ttf"/>
+	<resource type="download" name="OpenSans-Semibold.ttf" location="editor-b4/fonts/opensans/OpenSans-Semibold.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-Light.ttf" location="editor-b4/fonts/opensans/OpenSans-Light.ttf"/>
+	<resource type="download" name="OpenSans-Light.ttf" location="editor-b4/fonts/opensans/OpenSans-Light.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-Italic.ttf" location="editor-b4/fonts/opensans/OpenSans-Italic.ttf"/>
+	<resource type="download" name="OpenSans-Italic.ttf" location="editor-b4/fonts/opensans/OpenSans-Italic.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-ExtraBold.ttf" location="editor-b4/fonts/opensans/OpenSans-ExtraBold.ttf"/>
+	<resource type="download" name="OpenSans-ExtraBold.ttf" location="editor-b4/fonts/opensans/OpenSans-ExtraBold.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-LightItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-LightItalic.ttf"/>
+	<resource type="download" name="OpenSans-LightItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-LightItalic.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-Bold.ttf" location="editor-b4/fonts/opensans/OpenSans-Bold.ttf"/>
+	<resource type="download" name="OpenSans-Bold.ttf" location="editor-b4/fonts/opensans/OpenSans-Bold.ttf"/>
+	<resource type="download" name="fonts/opensans/opensans-light-webfont.woff" location="editor-b4/fonts/opensans/opensans-light-webfont.woff"/>
+	<resource type="download" name="opensans-light-webfont.woff" location="editor-b4/fonts/opensans/opensans-light-webfont.woff"/>
+	<resource type="download" name="fonts/opensans/OpenSans-SemiboldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-SemiboldItalic.ttf"/>
+	<resource type="download" name="OpenSans-SemiboldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-SemiboldItalic.ttf"/>
+	<resource type="download" name="fonts/opensans/opensans-lightitalic-webfont.woff" location="editor-b4/fonts/opensans/opensans-lightitalic-webfont.woff"/>
+	<resource type="download" name="opensans-lightitalic-webfont.woff" location="editor-b4/fonts/opensans/opensans-lightitalic-webfont.woff"/>
+	<resource type="download" name="fonts/opensans/OpenSans-ExtraBoldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-ExtraBoldItalic.ttf"/>
+	<resource type="download" name="OpenSans-ExtraBoldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-ExtraBoldItalic.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-Regular.ttf" location="editor-b4/fonts/opensans/OpenSans-Regular.ttf"/>
+	<resource type="download" name="OpenSans-Regular.ttf" location="editor-b4/fonts/opensans/OpenSans-Regular.ttf"/>
+	<resource type="download" name="fonts/opensans/OpenSans-BoldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-BoldItalic.ttf"/>
+	<resource type="download" name="OpenSans-BoldItalic.ttf" location="editor-b4/fonts/opensans/OpenSans-BoldItalic.ttf"/>
+	<resource type="download" name="cloud/images/UserAvatarAnonymous120.png" location="editor-b4/cloud/images/UserAvatarAnonymous120.png"/>
+	<resource type="download" name="cloud/images/megaphone@2x.png" location="editor-b4/cloud/images/megaphone@2x.png"/>
+	<resource type="download" name="support/images/Alasdair_120.png" location="editor-b4/support/images/Alasdair_120.png"/>
+	<resource type="download" name="support/images/Brendan_120.png" location="editor-b4/support/images/Brendan_120.png"/>
+	<resource type="download" name="support/images/Kendra_120.png" location="editor-b4/support/images/Kendra_120.png"/>
+	<resource type="download" name="support/images/Liz_120.png" location="editor-b4/support/images/Liz_120.png"/>
+	<resource type="download" name="support/images/Val_120.png" location="editor-b4/support/images/Val_120.png"/>
+	<resource type="download" name="support/images/Virgin_120.png" location="editor-b4/support/images/Virgin_120.png"/>
+	<resource type="download" name="image2wireframes/Onboarding.jpg" location="editor-b4/image2wireframes/Onboarding.jpg"/>
+	<!-- EDITOR DEPENDENCIES: END -->
+
+	</web-resource>
+
+	<resource type="download" name="heartbeat.png" location="heartbeat.png" />
+	<resource type="download" name="newmockup.png" location="newmockup.png" />
+	<resource type="download" name="icon_24x24.png" location="images/icon_24x24.png" />
+	<resource type="download" name="icon_24x24_with_border.png" location="images/icon_24x24_with_border.png" />
+	<resource type="download" name="icon_144x144.png" location="images/icon_144x144.png" />
+	<resource type="download" name="icons_module.png" location="images/icons_module.png"/>
+	<resource type="download" name="confStatus.png" location="images/confStatus.png"/>
+
+	// TODO
+	<resource type="download" name="error.png" location="images/error.png" />
+	<resource type="download" name="broken_link.png" location="images/broken_link.png" />
+	<resource type="download" name="generic_error.png" location="images/generic_error.png" />
+	<resource type="download" name="icon_add.png" location="images/icon_16x16.png" />
+	<resource type="download" name="spinner.gif" location="images/spinner.gif" />
+
+	<resource type="i18n" name="i18n" location="com.balsamiq.confluence.plugins.mockups" />
+
+	<servlet name="BAS Servlet" key="BasServlet" class="com.balsamiq.confluence.plugins.mockups.BasServlet">
+		<url-pattern>/com.balsamiq.mockups.bas</url-pattern>
+		<resource type="download" name="NewProject.bmpr" location="bmpr/NewProject.bmpr"/>
+	</servlet>
+
+	<servlet key="balsamiqMockupsEditorServlet" name="Balsamiq Wireframes Editor Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsEditor">
+		<description>Required. Responsible for the Balsamiq Wireframes editor.</description>
+		<url-pattern>/com.balsamiq.mockups.editor</url-pattern>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+	</servlet>
+
+	<servlet key="balsamiqMockupsDiagnosisWrapperServlet" name="Balsamiq Wireframes Diagnosis Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsDiagnosisWrapper">
+		<description>Required. Responsible for the Balsamiq Wireframes Diagnosis test.</description>
+		<url-pattern>/com.balsamiq.mockups.diagnosis.wrapper</url-pattern>
+	</servlet>
+
+	<servlet key="balsamiqMockupsDiagnosisServlet" name="Balsamiq Wireframes Diagnosis Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsDiagnosis">
+		<description>Required. Responsible for the Balsamiq Wireframes Diagnosis test.</description>
+		<url-pattern>/com.balsamiq.mockups.diagnosis</url-pattern>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+	</servlet>
+
+	<servlet key="balsamiqMockupsProjectListServlet" name="Balsamiq Wireframes Project List Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsProjectList">
+		<description>Required. Responsible for the Balsamiq Wireframes project list.</description>
+		<url-pattern>/com.balsamiq.mockups.project.list</url-pattern>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+	</servlet>
+
+	<servlet key="balsamiqMockupsProjectListWrapperServlet" name="Balsamiq Wireframes Project List Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsProjectListWrapper">
+		<description>Required. Responsible for the Balsamiq Wireframes project list.</description>
+		<url-pattern>/com.balsamiq.mockups.project.list.wrapper</url-pattern>
+	</servlet>
+
+	<servlet key="balsamiqWireframesMacroEditorServlet" name="Balsamiq Wireframes Macro Editor Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsMacroEditor">
+		<description>Required. Responsible for the Balsamiq Wireframes macro editor.</description>
+		<url-pattern>/com.balsamiq.mockups.macro.editor</url-pattern>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+	</servlet>
+
+	<servlet key="balsamiqWireframesMacroPreviewServlet" name="Balsamiq Wireframes Macro Preview Servlet" class="com.balsamiq.confluence.plugins.mockups.BalsamiqMockupsMacroPreview">
+		<description>Required. Responsible for the Balsamiq Wireframes macro preview.</description>
+		<url-pattern>/com.balsamiq.mockups.macro.preview</url-pattern>
+		<resource type="download" name="connect-api.js" location="lib/connect-api.js"/>
+		<resource type="download" name="all_bundle.js" location="js/all_bundle.js"/>
+	</servlet>
+
+	<xwork name="Configure Balsamiq Wireframes" key="configure-mockups">
+		<package name="form-mail" extends="default" namespace="/admin/plugins/mockups">
+			<default-interceptor-ref name="validatingStack" />
+			<action name="configure" class="com.balsamiq.confluence.plugins.mockups.config.ConfigureMockupsAction">
+				<result name="input" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="error" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="success" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+			</action>
+			<action name="save" class="com.balsamiq.confluence.plugins.mockups.config.ConfigureMockupsAction" method="save">
+				<result name="input" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="error" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="success" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+			</action>
+			<action name="saveMarketplace" class="com.balsamiq.confluence.plugins.mockups.config.ConfigureMockupsAction" method="saveMarketplace">
+				<result name="input" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="error" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+				<result name="success" type="velocity">/templates/mockups/config/configure-mockups.vm</result>
+			</action>
+		</package>
+	</xwork>
+
+<!--	<component name="Balsamiq Wireframes License Manager" class="com.balsamiq.confluence.plugins.mockups.MockupsLicenseManager" key="mockupsLicenseManager">-->
+<!--		<description>Required. Licensing and Configuration Manager.</description>-->
+<!--	</component>-->
+<!--	<component name="Balsamiq Wireframes Marketplace License Manager" class="com.balsamiq.confluence.plugins.mockups.MockupsMPLicenseManager" key="mockupsMPLicenseManager">-->
+<!--		<description>Required. Licensing and Configuration Manager for Marketplace.</description>-->
+<!--	</component>-->
+<!--	<component key="balsamiqMockupsLauncher" class="com.balsamiq.scheduler.Launcher" public="true">-->
+<!--		<description>Manages this plugin's lifecycle.</description>-->
+<!--		<interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>-->
+<!--	</component>-->
+<!--	<component key="balsamiqMockupsJobRunnerNotification" name="Job Runner Notification Service" class="com.balsamiq.scheduler.JobRunnerNotificationImpl"/>-->
+<!--	<component key="balsamiqMockupsJobRunner_BAS_Gardening" name="Job Runner BAS Gardening Service" class="com.balsamiq.scheduler.JobRunner_BAS_GardeningImpl"/>-->
+<!--	<component key="balsamiqMockupsSchedule" name="Schedule Service" class="com.balsamiq.scheduler.ScheduleServiceImpl"/>-->
+<!--	<component key="balsamiqMockupsMailService" name="Mail Service" class="com.balsamiq.confluence.plugins.mockups.mail.MailServiceImpl"/>-->
+<!--	<component key="balsamiqMockupsBasService" name="BAS Service" class="com.balsamiq.confluence.plugins.mockups.ao.BasServiceImpl"/>-->
+<!--	<component key="tx-processor" name="Transactional Annotation Processor"-->
+<!--			   class="com.atlassian.activeobjects.external.TransactionalAnnotationProcessor">-->
+<!--		<decription>Processes @Transactional annotations.</decription>-->
+<!--	</component>-->
+<!--	<component-import key="ao" name="Active Objects service" interface="com.atlassian.activeobjects.external.ActiveObjects">-->
+<!--		<description>Component to access Active Objects functionality from the plugin</description>-->
+<!--	</component-import>-->
+<!--	<component key="accessModeCompatService" class="com.atlassian.confluence.compat.api.service.accessmode.impl.DefaultAccessModeCompatService" />-->
+
+<!--	<component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor" />-->
+<!--	<component-import key="pluginController" interface="com.atlassian.plugin.PluginController" />-->
+<!--	<component-import key="txTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />-->
+<!--	<component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />-->
+<!--	<component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer" />-->
+<!--	<component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />-->
+<!--	<component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />-->
+<!--	<component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" />-->
+<!--	<component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver" />-->
+<!--	<component-import key="pluginLicenseManager" interface="com.atlassian.upm.api.license.PluginLicenseManager" />-->
+
+<!--	<component key="thirdPartyPluginLicenseStorageManager" class="com.atlassian.upm.license.storage.lib.ThirdPartyPluginLicenseStorageManagerImpl" />-->
+<!--	<component key="pluginLicenseStoragePluginInstaller" class="com.atlassian.upm.license.storage.lib.PluginLicenseStoragePluginInstaller" />-->
+<!--	<component key="atlassianMarketplaceUriFactory" class="com.atlassian.upm.license.storage.lib.AtlassianMarketplaceUriFactoryImpl" />-->
+
+	<content-template key="com.balsamiq.plugins.mockups.blueprint-template" i18n-name-key="com.balsamiq.plugins.mockups.blueprint-template" name="Balsamiq Wireframes Blueprint Template">
+		<resource name="template" type="download" location="blueprint-body.xml"/>
+	</content-template>
+	<blueprint key="com.balsamiq.plugins.mockups.blueprint" i18n-name-key="com.balsamiq.plugins.mockups.blueprint" content-template-key="com.balsamiq.plugins.mockups.blueprint-template" index-key="com.balsamiq.plugins.mockups.index">
+        <description>Requires Confluence 5.1+</description>
+        <content-template ref="com.balsamiq.plugins.mockups.blueprint-template"/>
+	</blueprint>
+	<web-item key="blueprint-item" name="Balsamiq Wireframes"
+		section="system.create.dialog/content">
+		<description key="com.balsamiq.confluence.plugins.mockups.blueprint.description">Requires Confluence 5.1+</description>
+    	<resource name="icon" type="download" location="blueprint_icon.png"/>
+    	<param name="blueprintKey" value="com.balsamiq.plugins.mockups.blueprint"/>
+    	<condition class="com.balsamiq.confluence.plugins.mockups.MockupsBlueprintCondition" />
+	</web-item>
+
+	<web-resource key="aui-extra-resources" name="AUI Extra Resources">
+		<dependency>com.atlassian.auiplugin:aui-experimental-progress-indicator</dependency>
+		<dependency>com.atlassian.auiplugin:aui-form-validation</dependency>
+		<dependency>com.atlassian.auiplugin:aui-select</dependency>
+		<dependency>com.atlassian.auiplugin:dialog2</dependency>
+	</web-resource>
+</atlassian-plugin>
